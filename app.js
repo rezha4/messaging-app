@@ -13,12 +13,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-import { signup, login } from "./controllers/userController";
+import { signup, login, getUsers } from "./controllers/userController";
 import { verifyToken } from "./authorization/verifyToken";
 import { postMessages, getMessages } from "./controllers/messageController";
 
 app.post("/signup", signup);
 app.post("/login", login);
+app.get("/users", getUsers);
 app.post("/messages", postMessages);
 app.get("/messages", getMessages);
 
