@@ -1,8 +1,8 @@
-import "dotenv/config";
-import express from "express";
-import mongoose from "mongoose";
-import jwt from "jsonwebtoken";
-import cors from "cors";
+require("dotenv/config");
+const express = require("express");
+const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+const cors = require("cors");
 
 mongoose.connect(process.env.MONGODB);
 const db = mongoose.connection;
@@ -13,10 +13,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-import { signup, login, getUsers } from "./controllers/userController";
-import { verifyToken } from "./authorization/verifyToken";
-import { postMessages, getMessages } from "./controllers/messageController";
+const userController = require("./controllers/userController");
+const { signup, login, getUsers } = userController;
 
+const { verifyToken } = require("./authorization/verifyToken");
+const messageController = require("./controllers/messageController");
+const { postMessages, getMessages } = messageController;
+
+app.get("/", (req, res) => {
+  res
+    .status(200)
+    .json({ message: "Welcome to the messaging-app API by Rezha" });
+});
 app.post("/signup", signup);
 app.post("/login", login);
 app.get("/users", getUsers);
@@ -37,6 +45,9 @@ app.get("/protected", verifyToken, (req, res) => {
   });
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`App is listening on port: ${process.env.PORT}`);
+const hostname = "0.0.0.0";
+const port = process.env.PORT || 3000;
+
+app.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
 });

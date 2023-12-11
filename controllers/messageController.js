@@ -1,7 +1,6 @@
-import mongoose from "mongoose";
-import Message from "../models/message";
+const Message = require("../models/message");
 
-export const postMessages = async (req, res, next) => {
+exports.postMessages = async (req, res, next) => {
   try {
     const { sender, receiver, message } = req.body;
     const newMessage = new Message({
@@ -16,7 +15,7 @@ export const postMessages = async (req, res, next) => {
   }
 };
 
-export const getMessages = async (req, res, next) => {
+exports.getMessages = async (req, res, next) => {
   const { sender, receiver } = req.query;
   try {
     const messages = await Message.find({
