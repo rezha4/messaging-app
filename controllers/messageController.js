@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Message from "../models/message";
 
 export const postMessages = async (req, res, next) => {
@@ -16,9 +17,14 @@ export const postMessages = async (req, res, next) => {
 };
 
 export const getMessages = async (req, res, next) => {
-  const { sender, receiver } = req.body;
+  const { sender, receiver } = req.query;
   try {
-    const messages = await Message.find({ sender, receiver });
+    const messages = await Message.find({
+      $or: [
+        { sender: sender, receiver: receiver },
+        { sender: receiver, receiver: sender },
+      ],
+    });
     return res.status(200).json({ messages });
   } catch (error) {
     return next(error);
