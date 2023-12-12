@@ -10,7 +10,7 @@ db.on("error", console.error.bind(console, "mongo connection error"));
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 
 const userController = require("./controllers/userController");
