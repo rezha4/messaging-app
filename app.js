@@ -10,7 +10,7 @@ db.on("error", console.error.bind(console, "mongo connection error"));
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: "https://playful-youtiao-23f51a.netlify.app" }));
 app.use(express.json());
 
 const userController = require("./controllers/userController");
