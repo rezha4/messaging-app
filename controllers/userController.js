@@ -43,12 +43,7 @@ exports.login = async (req, res, next) => {
     opts.expiresIn = "1d";
     const secret = process.env.SECRET;
     const token = jwt.sign({ user: user._id }, secret, opts);
-    const userData = {
-      id: user._id,
-      username: user.username,
-    };
-    console.log(userData);
-    return res.status(200).json({ user: userData, token });
+    return res.status(200).json({ user, token });
   } catch (error) {
     return next(error);
   }
